@@ -1,49 +1,42 @@
 import React, { useState } from 'react'
 import "./Home.css"
 
-import Bottle from "../Image/bottle-transparrent.png"
+
 import BBLue from "../Image/Blue bouchon.png"
 import BWhite from "../Image/White bouchon.png"
 import BOrange from "../Image/Orange bouchon.png"
 import Bottles from "../Image/assets.euromoneydigital.jpeg"
-import Signin from '../../components/Signin/Signin'
+
 import Recycle from "../Image/image-recycle2.jpg"
 import Money from "../Image/shutterstock_1724615215-1.jpg"
+import Banner from '../../components/Banner/Banner'
+import Rectangle from "../Image/Rectangle 3.png"
 function Home({setShowSign,showSign}) {
 
 
 
-  const handleClick=()=>{
-    setShowSign(true);
-  }
+
+  const pargraph=["Why throw when you can make money with your own plastic garbage ?","Our goal is to make you rich and the world a cleanest place.",
+
+     "Join us and be one of a hero that the planet needs.", " Don’t waste time and start now !"    ]
 
   return (
     <div className="home-wrapper">
        
-            <div className="banner-container">
-                <img src={Bottle} alt="Bottle" id="bottle"/>
-                <div className="titles">
-                    <h1>BOTTLE MONEY</h1>
-                    <h2>Recycle your plastic into your pocket</h2>
-                </div>
-            
-            </div>
-            <div className="catch-phrase">
-            <p>Why throw when you can make money with your own plastic garbage ?</p> 
-
-            <p>Our goal is to make you rich and the world a cleanest place.</p>
-
-             <p> Join us and be one of a hero that the planet needs.</p>
-
-               Don’t waste time and start now !
-            </div>
-            <button className="btn-donate" onClick={handleClick}>Throw my plastic</button>
+            <Banner pargraph={pargraph} setShowSign={setShowSign} page={1}/>
+           
+           
             <img src={BBLue} alt="BBLue" id="BBLue" />
             <img src={BWhite} alt="BWhite" id="BWhite" />
             <img src={BOrange} alt="BOrange" id="BOrange" />
             <div className="green-content2"></div>
 
             <div className="about-us">
+                <div className="rectangle-wrapper">
+                    <div className="rectangle">
+                        <img src={Rectangle} alt="Rectangle"  />
+                    </div>
+                </div>
                 <div className="about-content">
                     <p>Every year, about 8 million tons of plastic waste escapes into the oceans from coastal nations. That's the equivalent of setting 
                       five garbage bags full of trash on every foot of coastline around the world.</p>
@@ -62,7 +55,7 @@ function Home({setShowSign,showSign}) {
                 </div>
             </div>
 
-            {showSign && <Signin setShowSign={setShowSign} />}
+          
     </div>
   )
 }

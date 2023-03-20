@@ -4,10 +4,7 @@ import Bottle from "../Image/bottle-transparrent.png"
 import BBLue from "../Image/Blue bouchon.png"
 import BWhite from "../Image/White bouchon.png"
 import BOrange from "../Image/Orange bouchon.png"
-import Bottles from "../Image/assets.euromoneydigital.jpeg"
-import Signin from '../../components/Signin/Signin'
-import Recycle from "../Image/image-recycle2.jpg"
-import Money from "../Image/shutterstock_1724615215-1.jpg"
+
 
 import "./User.css"
 function User() {

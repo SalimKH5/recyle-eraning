@@ -1,0 +1,105 @@
+.maps-wrapper{
+
+        width: 100%;
+        height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:#2C6E49;
+        margin-top:-2rem;
+        padding-bottom: 3rem;
+        transition: 3000ms ease-in-out;
+        flex-direction: column;
+}
+
+
+.maps-wrapper .maps-content{
+    width:100%;
+    height:100%;
+    max-width: 46rem;
+    max-height:42rem;
+   padding:0 30px;
+
+}
+
+
+.notify-for-collecteur{
+    background-color: #bbffc698;
+    width:100%;
+    height:30vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    
+    
+}
+
+.notify-for-collecteur h2{
+    padding:10px;
+}
+
+.notify-for-collecteur button{
+   /* Frame 21 */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 30px;
+gap: 10px;
+
+background: #84B07B;
+border: 3px solid #000000;
+border-radius: 30px;
+
+
+/* Notify nearby collectors */
+
+width: 316px;
+height: 30px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 30px;
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.05em;
+
+color: #000000;
+cursor:pointer;
+
+}
+
+.notify-for-collecteur  p{
+    margin-top:10px;
+}
+
+
+
+ .rectangle-wrapper{
+    width: 100%;
+    height: 10rem;
+    z-index: -1;
+    background-color: #bbffc698;
+}
+
+ .rectangle-wrapper .rectangle{
+   float: right;
+   margin-top: -5px;
+
+}
+@media screen and (max-width:486px) {
+
+    .maps-wrapper{
+        width: 100%;
+        height: 30vh;
+    }
+    
+}

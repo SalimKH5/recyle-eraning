@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "./Signin.css"
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import Google from "./Gmail.svg"
-import {createUserWithEmailAndPassword,getAuth } from "firebase/auth";
+import {createUserWithEmailAndPassword } from "firebase/auth";
 import {auth,db} from "../../firebase"
 import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
@@ -21,7 +21,7 @@ import {
   getFirestore,
   query,  getDocs,
    collection,
-  where, addDoc,setDoc} from "firebase/firestore";
+  where, addDoc,setDoc, doc} from "firebase/firestore";
 
 
 
@@ -54,21 +54,31 @@ function Signin({setShowSign}) {
     event.preventDefault();
   };
 
+  const navigate=useNavigate()
 
-  const handleSubmit = async (e) => {
     
-    e.preventDefault()
-    try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-      const user = res.user;
-      await setDoc(collection(db, "users",user.uid), {
-        email,
-      });
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
+    const signIn = (e) => {
+      e.preventDefault();
+      createUserWithEmailAndPassword(auth, email, password)
+      .then((cred) => {
+          const docRef = doc(db, 'clients', cred.user.uid);
+          setDoc(docRef, {
+              name, email, password,fullName, uid: cred.user.uid, points: 0
+          })
+          .then(() => {
+              localStorage.setItem('user-uid', cred.user.uid);
+           
+          })
+          .catch((err) => {
+              console.log(err.message);
+          })
+      })
+      .catch((err) => {
+          console.log(err.message);
+      })
     }
-  };
+    
+  
   
   
 
@@ -76,7 +86,8 @@ function Signin({setShowSign}) {
   const [value, setValue] = useState()
   const [email,setEmail]=useState('')
   const [password,setPassword] = useState('')  
-  
+  const [name,setName] = useState('')
+  const [fullName,setFullName]=useState('')
   
   const handleSingin=(e)=>{
     e.preventDefault()
@@ -90,6 +101,7 @@ function Signin({setShowSign}) {
     setContent(true)
   }
 
+  
 
 
   return (
@@ -105,7 +117,7 @@ function Signin({setShowSign}) {
                 </div>
                 {!Content?
                 <>
-                <form action="">
+                <form >
                     <TextField sx={{width:"80%",p:"0px 5px",background:"#ffff",border:"20px" }} id="outlined-basic" 
                     label="email" variant="outlined" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
                     <FormControl sx={{ m: 1,width:"80%",p:"2px 5px",background:"#ffff" }} variant="filled">
@@ -146,18 +158,24 @@ function Signin({setShowSign}) {
                   :
                  <>
                  <form action="">
-                    <TextField sx={{ m: 1,width:"80%",padding:"2px 5px",background:"#ffff",border:"20px" }} id="outlined-basic" label="email" variant="outlined" />
+                    <TextField sx={{ m: 1,width:"80%",padding:"2px 5px",background:"#ffff",border:"20px" }} id="outlined-basic" label="email" variant="outlined" 
+                    value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
                    
-                    <TextField sx={{ m: 1,width:"80%",padding:"2px 5px",background:"#ffff",border:"20px" }} id="outlined-basic" label="UserName" variant="outlined" />
-                    <TextField sx={{ m: 1,width:"80%",padding:"2px 5px",background:"#ffff",border:"20px" }} id="outlined-basic" label="FullName" variant="outlined" />
-                    <FormControl sx={{ m: 1,width:"80%",padding:"2px 5px",background:"#ffff" }} variant="filled">
+                    <TextField sx={{ m: 1,width:"80%",padding:"2px 5px",background:"#ffff",border:"20px" }} id="outlined-basic" label="UserName" variant="outlined" 
+                    value={name} onChange={(e)=>{setName(e.target.value)}} />
+                    <TextField sx={{ m: 1,width:"80%",padding:"2px 5px",background:"#ffff",border:"20px" }} id="outlined-basic" label="FullName" variant="outlined" 
+                      value={fullName} onChange={(e)=>{setFullName(e.target.value)}} />
+
+                    <FormControl sx={{ m: 1,width:"80%",padding:"2px 5px",background:"#ffff" }} position="end" value={password}
+                          onChange={(e)=>{setPassword(e.target.value)}} variant="filled">
                       <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
                       <FilledInput
                         sx={{background:"#fff"}}
                         id="filled-adornment-password"
                         type={showPassword ? 'text' : 'password'}
+                        
                         endAdornment={
-                          <InputAdornment sx={{background:"#e1e1e1"}} position="end">
+                          <InputAdornment sx={{background:"#e1e1e1"}} position="end" >
                             <IconButton
                               aria-label="toggle password visibility"
                               onClick={handleClickShowPassword}
@@ -178,7 +196,7 @@ function Signin({setShowSign}) {
                         onChange={setValue}/>
 
                     
-                  <button type="submit"  onSubmit={handleSubmit}>Register</button>
+                  <button type="submit"  onClick={signIn}>Register</button>
                 </form>
                 <div className="or-container">
                   <hr />
